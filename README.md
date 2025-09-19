@@ -1,30 +1,335 @@
-<!-- markdownlint-disable MD041 -->
+# 模型说明
 
-| 模型名字 | 模型ID | C调用接口     |
-| :----: | :--: |          :--: |
-| mbv2_det_person_256_448_INT8|MBV2_DET_PERSON |TDL_Detection |
-|yolov8n_det_hand_384_640_INT8|YOLOV8N_DET_HAND |TDL_Detection |
-|yolov8n_det_pet_person_384_640_INT8|YOLOV8N_DET_PET_PERSON|TDL_Detection|
-|yolov8n_det_person_vehicle_384_640_INT8|YOLOV8N_DET_PERSON_VEHICLE |TDL_Detection |
-|yolov8n_det_hand_face_person_384_640_INT8|YOLOV8N_DET_HAND_FACE_PERSON|TDL_Detection|
-|yolov8n_det_head_hardhat_576_960_INT8|YOLOV8N_DET_HEAD_HARDHAT |TDL_Detection |
-|yolov8n_det_fire_smoke_384_640_INT8|YOLOV8N_DET_FIRE_SMOKE|TDL_Detection|
-|yolov8n_det_fire_384_640_INT8|YOLOV8N_DET_FIRE|TDL_Detection|
-|yolov8n_det_head_shoulder_384_640_INT8|YOLOV8N_DET_HEAD_SHOULDER|TDL_Detection|
-|yolov8n_det_license_plate_384_640_INT8|YOLOV8N_DET_LICENSE_PLATE  |TDL_Detection |
-|yolov8n_det_traffic_light_384_640_INT8|YOLOV8N_DET_TRAFFIC_LIGHT|TDL_Detection|
-|yolov8n_det_monitor_person_256_448_INT8|YOLOV8N_DET_MONITOR_PERSON|TDL_Detection|
-|scrfd_det_face_432_768_INT8|SCRFD_DET_FACE | TDL_FaceDetection |
-|cls_attribute_face_112_112_INT8 |CLS_ATTRIBUTE_FACE| TDL_FaceDetection |
-|cls_rgbliveness_256_256_INT8|CLS_RGBLIVENESS| TDL_Classfification |
-|cls_hand_gesture_128_128_INT8|CLS_HAND_GESTURE||
-|cls_sound_babay_cry_188_40_INT8|CLS_SOUND_BABAY_CRY | TDL_Classfification |
-|cls_sound_nihaoshiyun_126_40_INT8|CLS_SOUND_COMMAND| TDL_Classfification |
-|keypoint_license_plate_64_128_INT8|KEYPOINT_LICENSE_PLATE |TDL_Keypoint |
-|keypoint_hand_128_128_INT8|KEYPOINT_HAND |TDL_Keypoint |
-|keypoint_yolov8pose_person17_384_640_INT8|KEYPOINT_YOLOV8POSE_PERSON17 |TDL_Detection |
-|keypoint_simcc_person17_256_192_INT8|KEYPOINT_SIMCC_PERSON17||
-|lstr_det_lane_360_640_MIX|LSTR_DET_LANE | TDL_LaneDetection |
-|recognition_license_plate_24_96_MIX|RECOGNITION_LICENSE_PLATE | TDL_CharacterRecognition |
-|yolov8_seg_coco80_640_640_INT8|YOLOV8_SEG_COCO80||
-|topformer_seg_motion_512_960_INT8|TOPFORMER_SEG_MOTION||
+## 目录
+
+- [模型说明](#模型说明)
+  - [目录](#目录)
+  - [1.检测模型](#1检测模型)
+    - [1.1 人形检测](#11-人形检测)
+    - [1.2 头盔检测](#12-头盔检测)
+    - [1.3 烟火检测](#13-烟火检测)
+    - [1.4 车牌检测](#14-车牌检测)
+    - [1.5 手脸人检测](#15-手脸人检测)
+    - [1.6 宠物检测](#16-宠物检测)
+    - [1.7 监控人形检测](#17-监控人形检测)
+    - [1.8 俯视人行检测](#18-俯视人行检测)
+    - [1.9 红外人行检测](#19-红外人行检测)
+    - [1.10 头肩检测](#110-头肩检测)
+    - [1.11 信号灯检测](#111-信号灯检测)
+    - [1.12 人车检测](#112-人车检测)
+    - [1.13 火焰检测](#113-火焰检测)
+    - [1.14 手部检测](#114-手部检测)
+    - [1.15 人脸检测](#115-人脸检测)
+  - [2.分类模型](#2分类模型)
+    - [2.1 活体检测](#21-活体检测)
+    - [2.2 手四分类](#22-手四分类)
+    - [2.3 手势关键点分类](#23-手势关键点分类)
+    - [2.4 人脸属性](#24-人脸属性)
+    - [2.5 婴儿啼哭](#25-婴儿啼哭)
+    - [2.6 语音识别-中天小爱](#26-语音识别-中天小爱)
+    - [2.7 语音识别-中天视云](#27-语音识别-中天视云)
+  - [3 关键点检测](#3-关键点检测)
+    - [3.1 手关键点](#31-手关键点)
+    - [3.2 车牌关键点](#32-车牌关键点)
+    - [3.3 人体关键点](#33-人体关键点)
+  - [4.车道线回归](#4车道线回归)
+
+## 1.检测模型
+
+### 1.1 人形检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：MBV2_DET_PERSON
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | mbv2_det_person_256_448_INT8_cv184x.bmodel| 5000张  | person  | 0.521 |   |   |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | mbv2_det_person_512_896_INT8_cv184x.bmodel| 5000张  | person  | 0.646 |   |   |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | mbv2_det_person_512_960_INT8_cv184x.bmodel| 5000张  | person  | 0.481 |   |   |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | mbv2_det_person_896_896_INT8_cv184x.bmodel| 5000张  | person  | 0.689 |   |   |
+
+### 1.2 头盔检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_HEAD_HARDHAT
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_head_hardhat_576_960_INT8_cv186x.bmodel| 3440张  | head,hardhat | 0.872 | vpss:2.8,tpu:49.6,post:3,total:55.4 | 10.05 |
+    | yolov8n_det_head_hardhat_576_960_INT8_cv184x.bmodel| 1582张  | head,hardhat  | 0.91 |   |   |
+
+### 1.3 烟火检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_FIRE_SMOKE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_fire_smoke_384_640_INT8_cv184x.bmodel| 3440张  | fire, smoke | 0.761 |  |  |
+
+### 1.4 车牌检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_LICENSE_PLATE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_license_plate_384_640_INT8_cv184x.bmodel| 250张  | license plate | 0.953 |  |  |
+    | yolov8n_det_license_plate_384_640_INT8_cv186x.bmodel| 1000张  | license plate |0.983 | vpss:3.96,tpu:22.1,post:1.31,total:27.3 | 4.83 |
+
+### 1.5 手脸人检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_HAND_FACE_PERSON
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_hand_face_person_384_640_INT8_cv184x.bmodel| 2717张  | hand,face,person | 0.85 |  |  |
+
+### 1.6 宠物检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_PET_PERSON
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_pet_person_384_640_INT8_cv184x.bmodel| 2562张  | cat,dog,person | 0.869 |  |  |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_pet_person_035_384_640_INT8_cv184x.bmodel| 2562张  | cat,dog,person | 0.733 |  |  |
+
+### 1.7 监控人形检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_MONITOR_PERSON
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_monitor_person_256_448_INT8_cv184x.bmodel| 1700张  | person | 0.949 |  |  |
+
+### 1.8 俯视人行检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_MONITOR_PERSON
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_overlook_person_256_448_INT8_cv184x.bmodel| 2304张  |  | 0.994 |  |  |
+
+### 1.9 红外人行检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_MONITOR_PERSON
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_ir_person_384_640_INT8_cv184x.bmodel| 2198张  |  | 0.949 |  |  |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_ir_person_mbv2_384_640_INT8_cv184x.bmodel| 2198张  |  | 0.894 |  |  |
+
+### 1.10 头肩检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_HEAD_SHOULDER
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_head_shoulder_384_640_INT8_cv184x.bmodel| 15951张  | head shoulder | 0.847 |  |  |
+
+### 1.11 信号灯检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_TRAFFIC_LIGHT
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_traffic_light_384_640_INT8_cv184x.bmodel| 2686张 / 245张 / 853张  | red,yellow,green,off,wait on | Bosch_roi： map50=0.72 / S2TLD1080x1920_roi: map50=0.937 / S2TLD720x1280_roi: map50=0.946 |
+
+### 1.12 人车检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_PERSON_VEHICLE
+- 模型性能：
+  
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_person_vehicle_384_640_INT8_cv184x.bmodel| 133张 / 2967张 / 836张 | red,yellow,green,off,wait on | soda10m_val: map50=0.46 / val2017: map50=0.628 / videoimg: map50=0.469   |  |  |
+    | yolov8n_det_person_vehicle_384_640_INT8_cv181x.cvimodel| 133张  | red,yellow,green,off,wait on | soda10m_val: map50= 0.473 |  |  |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_person_vehicle_mv2_035_384_640_INT8_cv184x.bmodel| 133张 / 2967张 / 836张  | red,yellow,green,off,wait on | soda10m_val: map50=0.329 / val2017: map50=0.475 / videoimg: map50=0.329 |  |  |
+
+### 1.13 火焰检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_FIRE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_fire_384_640_INT8_cv184x.bmodel| 660张  | fire | 0.664 |  |  |
+
+### 1.14 手部检测
+
+- 调用C接口：TDL_Detection
+- 模型ID：YOLOV8N_DET_HAND
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_hand_384_640_INT8_cv184x.bmodel| 2777张  | hand | 0.817 |  |  |
+    | yolov8n_det_hand_384_640_INT8_cv181x.cvimodel| 2777张  | hand | 0.774 |  |  |
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | yolov8n_det_hand_mv3_384_640_INT8_cv184x.bmodel| 2777张  | hand | 0.778 |  |  |
+
+### 1.15 人脸检测
+
+- 调用C接口：TDL_FaceDetection
+- 模型ID：SCRFD_DET_FACE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | scrfd_det_face_432_768_INT8_cv184x.bmodel| 3226张  | face | 0.535 |  |  |
+
+## 2.分类模型
+
+### 2.1 活体检测
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_RGBLIVENESS
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | mAP50  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | cls_rgbliveness_256_256_INT8_cv184x.bmodel| 3226张  | live,spoof | 0.999 |  |  |
+
+### 2.2 手四分类
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_HAND_GESTURE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | cls_hand_gesture_128_128_INT8_cv184x.bmodel| 15613张  | fist,five,none,two | 0.554 |  |  |
+    | cls_hand_gesture_128_128_INT8_cv181x.cvimodel| 15613张  | fist,five,none,two | 0.912 | 2.76/1.09/0.196 | 1.16 |
+
+### 2.3 手势关键点分类
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_KEYPOINT_HAND_GESTURE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | cls_keypoint_hand_gesture_1_42_INT8_cv184x.bmodel| 2468张  | fist,five,four,none,ok,one,three,three2,two | 0.770 |  |  |
+
+### 2.4 人脸属性 
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_ATTRIBUTE_GENDER_AGE_GLASS_MASK
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    | cls_attribute_gender_age_glass_mask_112_112_INT8_cv184x.bmodel| 8271张  | age,gender,glass,mask | 性别：准确率0.963 眼镜：准确率0.993 口罩：准确率0.999 年龄：正确率0.974 |  |  |
+
+### 2.5 婴儿啼哭
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_SOUND_BABAY_CRY
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |cls_sound_babay_cry_188_40_INT8_cv184x.bmodel| 8998张 | background,cry | 0.956 |  |
+
+### 2.6 语音识别-中天小爱
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_SOUND_COMMAND_XIAOAIXIAOAI
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |cls_sound_xiaoaixiaoai_126_40_INT8_cv184x.bmodel| 2658张 | background,xiaoaixiaoai | 0.788 |  |
+
+### 2.7 语音识别-中天视云
+
+- 调用C接口：TDL_Classfification
+- 模型ID：CLS_SOUND_COMMAND_NIHAOSHIYUN
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |cls_sound_nihaoshiyun_126_40_INT8_cv184x.bmodel| 1786张 | background,nihaoshiyun | 0.934 |  |
+
+## 3 关键点检测
+
+### 3.1 手关键点
+
+- 调用C接口：TDL_Keypoint
+- 模型ID：KEYPOINT_HAND
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | PCK | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |keypoint_hand_128_128_INT8_cv184x.bmodel| 2468张 |  | PCK@0.05: 0.859 PCK@0.10: 0.952 PCK@0.20: 0.985 |  |
+    |keypoint_hand_128_128_INT8_cv186x.bmodel| 47667张 |  | pck@0.05: 0.886 |  |
+
+### 3.2 车牌关键点
+
+- 调用C接口：TDL_Keypoint
+- 模型ID：KEYPOINT_LICENSE_PLATE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | PCK | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |keypoint_license_plate_64_128_INT8_cv184x.bmodel| 1070张 | top_left,top_right,bottom_left,bottom_right | PCK@3.00：0.598 PCK@5.00：0.869 PCK@8.00：0.958 |  |
+
+### 3.3 人体关键点
+
+- 调用C接口：TDL_Keypoint
+- 模型ID：KEYPOINT_YOLOV8POSE_PERSON17
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | PCK  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |keypoint_yolov8pose_person17_384_640_INT8_cv184x.bmodel| 5000张 |  | PCK@5.00:0.628 PCK@10.00:0.729 PCK@50.00:0.838 |  |
+
+## 4.车道线回归
+
+- 调用C接口：TDL_LaneDetection
+- 模型ID：LSTR_DET_LANE
+- 模型性能：
+
+    | 模型名称| 图片数量 | 类别 | 准确率  | 预处理/推理/后处理耗时（ms） | ION占用(MB) |
+    |----------|----------|------|--------|-----------------------------|-------------|
+    |lstr_det_lane_360_640_MIX_cv184x.bmodel| 2000张 |  | 0.9004 |  |
